@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+
+{% block title %}Feeling Lost? - Campus Lost & Found{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <!-- Header Section -->
+      <div class="text-center mb-5">
+        <div class="mb-4">
+          <i data-lucide="compass" size="64" class="text-primary"></i>
+        </div>
+        <h1 class="display-4 fw-bold mb-3">Feeling Lost?</h1>
+        <p class="lead text-muted">
+          Don't worry, you're in the right place! This portal is here to help you find your way back to your belongings.
+        </p>
+      </div>
+
+      <!-- Info Cards -->
+      <div class="row g-4 mb-5">
+        <div class="col-md-4">
+          <div class="card border-0 shadow-sm rounded-4 h-100 text-center p-4">
+            <div class="mb-3">
+              <i data-lucide="search" size="48" class="text-danger"></i>
+            </div>
+            <h5 class="fw-bold mb-2">Lost Something?</h5>
+            <p class="text-muted small mb-3">
+              Report your lost item with as much detail as possible to increase chances of recovery.
+            </p>
+            <a href="{{ url_for('report_item', item_type='lost') }}" class="btn btn-danger rounded-3">
+              Report Lost
+            </a>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card border-0 shadow-sm rounded-4 h-100 text-center p-4">
+            <div class="mb-3">
+              <i data-lucide="package-check" size="48" class="text-success"></i>
+            </div>
+            <h5 class="fw-bold mb-2">Found Something?</h5>
+            <p class="text-muted small mb-3">
+              Help reunite someone with their belongings by reporting what you found.
+            </p>
+            <a href="{{ url_for('report_item', item_type='found') }}" class="btn btn-success rounded-3">
+              Report Found
+            </a>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card border-0 shadow-sm rounded-4 h-100 text-center p-4">
+            <div class="mb-3">
+              <i data-lucide="list" size="48" class="text-primary"></i>
+            </div>
+            <h5 class="fw-bold mb-2">Browse Items</h5>
+            <p class="text-muted small mb-3">
+              Check out all reported lost and found items on our main feed.
+            </p>
+            <a href="{{ url_for('home') }}" class="btn btn-primary rounded-3">
+              View All Items
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- About Section -->
+      <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-body p-5">
+          <div class="row align-items-center">
+            <div class="col-md-8">
+              <h3 class="fw-bold mb-3">
+                <i data-lucide="heart" size="28" class="text-danger me-2"></i>
+                About This Portal
+              </h3>
+              <p class="text-muted mb-3">
+                This portal helps students find their belongings on campus. Whether you've lost something or found something, 
+                we're here to help connect items with their rightful owners.
+              </p>
+              <p class="text-muted mb-0">
+                Our community-driven platform makes it easy to report, search, and claim lost items. 
+                Together, we can keep our campus connected and help everyone find what they're looking for.
+              </p>
+            </div>
+            <div class="col-md-4 text-center">
+              <i data-lucide="users" size="120" class="text-primary opacity-25"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tips Card -->
+      <div class="card border-0 bg-primary-subtle mb-4">
+        <div class="card-body p-4">
+          <h5 class="fw-bold mb-3">
+            <i data-lucide="lightbulb" size="24" class="me-2 text-warning"></i>
+            Tips for Success
+          </h5>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="d-flex">
+                <i data-lucide="check-circle" size="20" class="text-success me-2 mt-1 flex-shrink-0"></i>
+                <div>
+                  <strong class="small">Be Descriptive</strong>
+                  <p class="small text-muted mb-0">Include unique identifiers like brand, color, and model</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="d-flex">
+                <i data-lucide="check-circle" size="20" class="text-success me-2 mt-1 flex-shrink-0"></i>
+                <div>
+                  <strong class="small">Upload Photos</strong>
+                  <p class="small text-muted mb-0">A picture is worth a thousand words</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="d-flex">
+                <i data-lucide="check-circle" size="20" class="text-success me-2 mt-1 flex-shrink-0"></i>
+                <div>
+                  <strong class="small">Check Regularly</strong>
+                  <p class="small text-muted mb-0">New items are added daily</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="d-flex">
+                <i data-lucide="check-circle" size="20" class="text-success me-2 mt-1 flex-shrink-0"></i>
+                <div>
+                  <strong class="small">Act Quickly</strong>
+                  <p class="small text-muted mb-0">Report lost/found items as soon as possible</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Developer Easter Egg -->
+      <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4">
+          <div class="d-flex align-items-start">
+            <div class="bg-dark rounded-3 p-3 me-3">
+              <i data-lucide="terminal" size="32" class="text-white"></i>
+            </div>
+            <div>
+              <h6 class="fw-bold mb-2">Developer Easter Egg 🥚</h6>
+              <p class="text-muted small mb-2">
+                On the developer's laptop, running <code class="bg-light px-2 py-1 rounded">python fun_antigravity.py</code> 
+                opens a fun XKCD comic using Python's <code class="bg-light px-2 py-1 rounded">import antigravity</code> easter egg.
+              </p>
+              <p class="text-muted small mb-0">
+                <i data-lucide="info" size="14" class="me-1"></i>
+                This is a Python easter egg that opens <a href="https://xkcd.com/353/" target="_blank" class="text-decoration-none">xkcd.com/353</a> 
+                about the joy of Python programming!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="text-center mt-5 pt-4">
+        <h4 class="fw-bold mb-3">Ready to get started?</h4>
+        <p class="text-muted mb-4">Help keep our campus community connected</p>
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+          <a href="{{ url_for('lost_items') }}" class="btn btn-outline-danger btn-lg px-5">
+            <i data-lucide="alert-circle" size="20" class="me-2"></i>
+            View Lost Items
+          </a>
+          <a href="{{ url_for('found_items') }}" class="btn btn-outline-success btn-lg px-5">
+            <i data-lucide="check-circle" size="20" class="me-2"></i>
+            View Found Items
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  lucide.createIcons();
+</script>
+
+{% endblock %}

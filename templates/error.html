@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Error {{ error_code }} - Campus Lost & Found{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row justify-content-center align-items-center" style="min-height: 60vh;">
+    <div class="col-lg-6 text-center">
+      <!-- Error Icon -->
+      <div class="mb-4">
+        {% if error_code == 404 %}
+          <i data-lucide="search-x" size="120" class="text-muted opacity-25"></i>
+        {% else %}
+          <i data-lucide="alert-triangle" size="120" class="text-danger opacity-25"></i>
+        {% endif %}
+      </div>
+
+      <!-- Error Code -->
+      <h1 class="display-1 fw-bold mb-3" style="font-size: 8rem; color: #dee2e6;">
+        {{ error_code }}
+      </h1>
+
+      <!-- Error Message -->
+      <h2 class="fw-bold mb-3">
+        {% if error_code == 404 %}
+          Page Not Found
+        {% elif error_code == 500 %}
+          Internal Server Error
+        {% else %}
+          Oops! Something went wrong
+        {% endif %}
+      </h2>
+
+      <p class="lead text-muted mb-4">
+        {{ error_message }}
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="d-flex flex-wrap justify-content-center gap-3">
+        <a href="{{ url_for('home') }}" class="btn btn-primary btn-lg px-5">
+          <i data-lucide="home" size="20" class="me-2"></i>
+          Go Home
+        </a>
+        <button onclick="history.back()" class="btn btn-outline-secondary btn-lg px-4">
+          <i data-lucide="arrow-left" size="20" class="me-2"></i>
+          Go Back
+        </button>
+      </div>
+
+      <!-- Help Links -->
+      <div class="mt-5 pt-4">
+        <p class="text-muted small mb-3">Looking for something?</p>
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+          <a href="{{ url_for('lost_items') }}" class="text-decoration-none text-muted small">
+            <i data-lucide="alert-circle" size="16" class="me-1"></i>
+            Lost Items
+          </a>
+          <span class="text-muted">|</span>
+          <a href="{{ url_for('found_items') }}" class="text-decoration-none text-muted small">
+            <i data-lucide="check-circle" size="16" class="me-1"></i>
+            Found Items
+          </a>
+          <span class="text-muted">|</span>
+          <a href="{{ url_for('report_item', item_type='lost') }}" class="text-decoration-none text-muted small">
+            <i data-lucide="plus-circle" size="16" class="me-1"></i>
+            Report Item
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  lucide.createIcons();
+</script>
+
+{% endblock %}

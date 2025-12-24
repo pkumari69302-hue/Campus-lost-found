@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block title %}Report {{ item_type|capitalize }} Item - Campus Lost & Found{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="text-center mb-5">
+        <div class="mb-3">
+          <span class="badge {% if item_type == 'lost' %}bg-danger{% else %}bg-success{% endif %} rounded-circle p-3 shadow">
+            <i data-lucide="{% if item_type == 'lost' %}alert-circle{% else %}package-check{% endif %}" size="32"></i>
+          </span>
+        </div>
+        <h1 class="display-5 fw-bold mb-3">Report {{ item_type|capitalize }} Item</h1>
+        <p class="text-muted lead">
+          {% if item_type == 'lost' %}
+            Help us help you find your lost item by providing detailed information.
+          {% else %}
+            Help reunite someone with their belongings by reporting what you found.
+          {% endif %}
+        </p>
+      </div>
+
+      <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4 p-md-5">
+          <form method="post" enctype="multipart/form-data">
+            
+            <div class="mb-5">
+              <h5 class="fw-bold mb-4 pb-2 border-bottom">
+                <i data-lucide="asterisk" size="18" class="me-2 text-danger"></i>
+                Required Information
+              </h5>
+
+              <div class="mb-4">
+                <label class="form-label fw-semibold">Item Title *</label>
+                <input 
+                  class="form-control form-control-lg bg-light border-0 shadow-sm" 
+                  name="title" 
+                  placeholder="e.g., Black AirPods Pro"
+                  required>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label fw-semibold">Category *</label>
+                <select class="form-select form-select-lg bg-light border-0 shadow-sm" name="category" required>
+                  <option value="">Select a category</option>
+                  <option value="Electronics">📱 Electronics</option>
+                  <option value="ID Card">🪪 ID Card</option>
+                  <option value="Bag/Backpack">🎒 Bag/Backpack</option>
+                  <option value="Keys">🔑 Keys</option>
+                  <option value="Wallet">💳 Wallet</option>
+                  <option value="Clothing">👕 Clothing</option>
+                  <option value="Books">📚 Books</option>
+                  <option value="Accessories">⌚ Accessories</option>
+                  <option value="Sports Equipment">⚽ Sports Equipment</option>
+                  <option value="Other">📦 Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-5">
+              <h5 class="fw-bold mb-4 pb-2 border-bottom">
+                <i data-lucide="file-text" size="18" class="me-2 text-primary"></i>
+                Item Details
+              </h5>
+
+              <div class="mb-4">
+                <label class="form-label fw-semibold">Detailed Description</label>
+                <textarea 
+                  class="form-control bg-light border-0 shadow-sm" 
+                  name="description" 
+                  rows="4"
+                  placeholder="Brand, model, unique features..."></textarea>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label fw-semibold">Color</label>
+                <input 
+                  class="form-control bg-light border-0 shadow-sm" 
+                  name="color"
+                  placeholder="e.g., Black, Navy Blue">
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label fw-semibold">Upload Image</label>
+                <div class="upload-area bg-light border-2 border-dashed rounded-3 p-4 text-center">
+                  <input type="file" class="form-control d-none" name="image_file" accept="image/*" id="imageUpload">
+                  <label for="imageUpload" class="d-block cursor-pointer">
+                    <i data-lucide="upload-cloud" size="48" class="text-muted mb-3"></i>
+                    <p class="mb-2 fw-semibold">Click to upload or drag and drop</p>
+                  </label>
+                  <div id="imagePreview" class="mt-3"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-5">
+              <h5 class="fw-bold mb-4 pb-2 border-bottom">
+                <i data-lucide="map-pin" size="18" class="me-2 text-danger"></i>
+                Location & Time
+              </h5>
+
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">Location</label>
+                  <input class="form-control bg-light border-0 shadow-sm" name="location" placeholder="e.g., Library, CSE Block">
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">Date</label>
+                  <input 
+                    type="date" 
+                    class="form-control bg-light border-0 shadow-sm" 
+                    name="date"
+                    max="{{ today }}">
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex flex-column flex-md-row gap-3">
+              <button class="btn {% if item_type == 'lost' %}btn-danger{% else %}btn-success{% endif %} btn-lg flex-grow-1 fw-semibold py-3" type="submit">
+                Submit Report
+              </button>
+              <a href="{{ url_for('home') }}" class="btn btn-outline-secondary btn-lg px-5 py-3">Cancel</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  lucide.createIcons();
+  document.getElementById('imageUpload').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('imagePreview').innerHTML = `<img src="${e.target.result}" class="img-fluid rounded-3 shadow-sm" style="max-height: 200px;">`;
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+</script>
+
+{% endblock %}

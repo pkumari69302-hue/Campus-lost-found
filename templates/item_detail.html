@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+
+{% block title %}{{ item.title }} - Campus Lost & Found{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+  <div class="row">
+    <!-- Main Content -->
+    <div class="col-lg-8">
+      <!-- Item Card -->
+      <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <!-- Image -->
+        {% if item.image_url %}
+        <div class="position-relative">
+          <img src="{{ item.image_url }}" class="card-img-top rounded-top-4" alt="{{ item.title }}" style="max-height: 400px; object-fit: cover;">
+          <span class="position-absolute top-0 start-0 m-3 badge {% if item.type == 'lost' %}bg-danger{% else %}bg-success{% endif %} rounded-pill px-4 py-2 shadow fs-6">
+            <i data-lucide="{% if item.type == 'lost' %}alert-circle{% else %}check-circle{% endif %}" size="16" class="me-2"></i>
+            {{ item.type|upper }}
+          </span>
+        </div>
+        {% endif %}
+
+        <!-- Content -->
+        <div class="card-body p-4 p-md-5">
+          <!-- Category Badge -->
+          {% if item.category %}
+          <div class="mb-3">
+            <span class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill">
+              <i data-lucide="tag" size="14" class="me-1"></i>
+              {{ item.category }}
+            </span>
+          </div>
+          {% endif %}
+
+          <!-- Title -->
+          <h1 class="display-6 fw-bold mb-4">{{ item.title }}</h1>
+
+          <!-- Description -->
+          {% if item.description %}
+          <div class="mb-4">
+            <h5 class="fw-semibold mb-3">
+              <i data-lucide="align-left" size="20" class="me-2 text-primary"></i>
+              Description
+            </h5>
+            <p class="text-muted lead">{{ item.description }}</p>
+          </div>
+          {% endif %}
+
+          <!-- Item Details Grid -->
+          <div class="row g-3 mb-4">
+            {% if item.location %}
+            <div class="col-md-6">
+              <div class="d-flex align-items-start p-3 bg-light rounded-3">
+                <i data-lucide="map-pin" size="24" class="text-danger me-3 mt-1"></i>
+                <div>
+                  <p class="small text-muted mb-1">Location</p>
+                  <p class="mb-0 fw-semibold">{{ item.location }}</p>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+
+            {% if item.date %}
+            <div class="col-md-6">
+              <div class="d-flex align-items-start p-3 bg-light rounded-3">
+                <i data-lucide="calendar" size="24" class="text-info me-3 mt-1"></i>
+                <div>
+                  <p class="small text-muted mb-1">Date</p>
+                  <p class="mb-0 fw-semibold">{{ item.date }}</p>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+
+            {% if item.color %}
+            <div class="col-md-6">
+              <div class="d-flex align-items-start p-3 bg-light rounded-3">
+                <i data-lucide="palette" size="24" class="text-warning me-3 mt-1"></i>
+                <div>
+                  <p class="small text-muted mb-1">Color</p>
+                  <p class="mb-0 fw-semibold">{{ item.color }}</p>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+
+            {% if item.hostel %}
+            <div class="col-md-6">
+              <div class="d-flex align-items-start p-3 bg-light rounded-3">
+                <i data-lucide="building" size="24" class="text-purple me-3 mt-1"></i>
+                <div>
+                  <p class="small text-muted mb-1">Hostel / Block</p>
+                  <p class="mb-0 fw-semibold">{{ item.hostel }}</p>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+
+            {% if item.phone %}
+            <div class="col-md-6">
+              <div class="d-flex align-items-start p-3 bg-light rounded-3">
+                <i data-lucide="phone" size="24" class="text-success me-3 mt-1"></i>
+                <div>
+                  <p class="small text-muted mb-1">Contact Phone</p>
+                  <p class="mb-0 fw-semibold">{{ item.phone }}</p>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Claims Section -->
+      <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-body p-4 p-md-5">
+          <h4 class="fw-bold mb-4">
+            <i data-lucide="message-circle" size="24" class="me-2 text-primary"></i>
+            Claims ({{ claims|length }})
+          </h4>
+
+          {% if claims %}
+          <div class="list-group list-group-flush">
+            {% for claim in claims %}
+            <div class="list-group-item px-0 py-3 border-start-0 border-end-0">
+              <div class="d-flex align-items-start">
+                <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px; min-width: 40px;">
+                  <i data-lucide="user" size="20" class="text-white"></i>
+                </div>
+                <div class="flex-grow-1">
+                  <h6 class="fw-bold mb-1">{{ claim.name }}</h6>
+                  <p class="text-muted mb-0">{{ claim.message or "No message provided" }}</p>
+                  {% if claim.created_at %}
+                  <p class="small text-muted mt-2 mb-0">
+                    <i data-lucide="clock" size="14" class="me-1"></i>
+                    {{ claim.created_at[:10] }}
+                  </p>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div class="text-center py-4">
+            <i data-lucide="message-square-off" size="48" class="text-muted opacity-25 mb-3"></i>
+            <p class="text-muted mb-0">No claims yet. Be the first to claim this item!</p>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col-lg-4">
+      <!-- Claim Form Card -->
+      <div class="card border-0 shadow-sm rounded-4 sticky-top" style="top: 100px;">
+        <div class="card-body p-4">
+          <h5 class="fw-bold mb-3">
+            <i data-lucide="hand" size="20" class="me-2 text-success"></i>
+            Is this yours?
+          </h5>
+          <p class="text-muted small mb-4">
+            Submit a claim and the item owner will be notified to verify your identity.
+          </p>
+
+          <form method="post">
+            <div class="mb-3">
+              <label class="form-label fw-semibold small">Your Name *</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-end-0">
+                  <i data-lucide="user" size="18" class="text-muted"></i>
+                </span>
+                <input 
+                  class="form-control border-start-0 bg-light" 
+                  name="name" 
+                  placeholder="Enter your full name"
+                  required>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold small">Why is this yours?</label>
+              <textarea 
+                class="form-control bg-light" 
+                name="message" 
+                rows="4"
+                placeholder="Describe identifying features, where you lost it, or other details..."></textarea>
+              <div class="form-text small">
+                <i data-lucide="info" size="14" class="me-1"></i>
+                Provide specific details to help verify ownership
+              </div>
+            </div>
+
+            <button class="btn btn-success w-100 fw-semibold py-2 rounded-3" type="submit">
+              <i data-lucide="send" size="18" class="me-2"></i>
+              Submit Claim
+            </button>
+          </form>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="card-footer bg-light border-0 p-4">
+          <h6 class="fw-semibold mb-3 small text-muted text-uppercase">Quick Actions</h6>
+          <div class="d-grid gap-2">
+            <a href="{{ url_for('home') }}" class="btn btn-outline-secondary btn-sm rounded-3">
+              <i data-lucide="arrow-left" size="16" class="me-1"></i>
+              Back to Listings
+            </a>
+            <a href="{{ url_for('report_item', item_type='lost') }}" class="btn btn-outline-danger btn-sm rounded-3">
+              <i data-lucide="alert-circle" size="16" class="me-1"></i>
+              Report Lost Item
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  lucide.createIcons();
+</script>
+
+{% endblock %}
