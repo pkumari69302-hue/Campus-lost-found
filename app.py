@@ -187,7 +187,7 @@ def item_detail(item_id):
     
     return render_template("item_detail.html", item=item, claims=claims)
 
-@app.route("/lost_item")
+@app.route("/lost_items")
 def lost_items():
     search = request.args.get("q", "").strip()
     category = request.args.get("category", "").strip()
@@ -195,7 +195,7 @@ def lost_items():
     categories = sorted(list(set(item.get("category", "Other") for item in items if item.get("category"))))
     return render_template("home.html", items=items, page_title="Lost Items", q=search, categories=categories, selected_category=category, filter_type="lost")
 
-@app.route("/found_item")
+@app.route("/found_items")
 def found_items():
     search = request.args.get("q", "").strip()
     category = request.args.get("category", "").strip()
